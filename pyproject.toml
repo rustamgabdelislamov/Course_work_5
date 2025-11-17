@@ -6,8 +6,14 @@ authors = [
     {name = "Rustam Gabdelislamov",email = "rustamgabdelislamov911@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12, <4.0"
 dependencies = [
+    "django (>=5.2.8,<6.0.0)",
+    "psycopg2 (>=2.9.11,<3.0.0)",
+    "python-dotenv (>=1.2.1,<2.0.0)",
+    "djangorestframework (>=3.16.1,<4.0.0)",
+    "black (>=25.11.0,<26.0.0)",
+    "pillow (>=12.0.0,<13.0.0)"
 ]
 
 
