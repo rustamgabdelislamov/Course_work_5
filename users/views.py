@@ -18,7 +18,7 @@ class CustomUserCreateAPIView(generics.CreateAPIView):
         user = serializer.save(is_active=True)
         user.set_password(user.password)
         user.save()
-        original_password = serializer.validated_data['password']
+        original_password = serializer.validated_data["password"]
         # print(f"User created: {user.email}, Password (hashed): {user.password}")
         user = authenticate(email=user.email, password=original_password)
         # print(f"Authenticated user: {user}")
