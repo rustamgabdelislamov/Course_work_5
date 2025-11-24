@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from habit.models import Habits
+
+
+@admin.register(Habits)
+class HabitsAdmin(admin.ModelAdmin):
+    list_display = ('action', 'id', 'owner')  # Поля, которые будут отображаться в списке
+    search_fields = ('action',)

@@ -11,6 +11,7 @@ class Habits(models.Model):
         null=True,
         blank=True,
         verbose_name="Создатель привычки",
+        related_name= "user"
     )
     place = models.CharField(verbose_name="Место выполнения", blank=True, null=True)
     time = models.TimeField(verbose_name="Время выполнения")
@@ -31,7 +32,7 @@ class Habits(models.Model):
     award = models.CharField(
         max_length=100, null=True, blank=True, verbose_name="Вознаграждение"
     )
-    time_to_action = models.DurationField(
+    time_to_action = models.TimeField(
         default=timedelta(minutes=2), verbose_name="Время на выполнение"
     )
     is_published = models.BooleanField(default=True, verbose_name="Признак публичности")
