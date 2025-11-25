@@ -175,3 +175,16 @@ CELERY_BEAT_SCHEDULE = {
         ),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "https://read-and-write.example.com",
+    "https://read-only.example.com",
+    "http://localhost:8000",  # Замените на адрес вашего фронтенд-сервера
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://read-and-write.example.com",  # Замените на адрес вашего фронтенд-сервера
+    # и добавьте адрес бэкенд-сервера
+]
+
+CORS_ALLOW_ALL_ORIGINS = False

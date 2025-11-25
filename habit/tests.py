@@ -1,12 +1,8 @@
 from datetime import time
-from unittest import TestCase
-
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.exceptions import ValidationError
 from rest_framework.test import APITestCase
 from habit.models import Habits
-from habit.validators import validate_pleasant_habit
 from users.models import CustomUser
 
 

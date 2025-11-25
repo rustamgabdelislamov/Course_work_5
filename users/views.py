@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import AllowAny, IsAuthenticated

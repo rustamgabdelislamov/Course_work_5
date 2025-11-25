@@ -1,11 +1,5 @@
 from datetime import timedelta, time
-
 from rest_framework.exceptions import ValidationError
-
-from habit.models import Habits
-
-
-# from habit.models import Habits
 
 
 def validate_pleasant_habit(addition_habit):
@@ -20,7 +14,7 @@ def validate_pleasant_habit(addition_habit):
 def validate_one_field_only(addition_habit, award):
     if addition_habit and award:
         raise ValidationError(
-            f"Заполните только одно из полей , либо связанную привычку, либо вознаграждение"
+            "Заполните только одно из полей , либо связанную привычку, либо вознаграждение"
         )
 
 
