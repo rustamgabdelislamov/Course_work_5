@@ -1,13 +1,23 @@
+from datetime import timedelta
+
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from habit.models import Habits
-from habit.validators import validate_pleasant_habit, validate_one_field_only, lead_time, period_habit
+from habit.validators import (
+    validate_pleasant_habit,
+    validate_one_field_only,
+    lead_time,
+    period_habit,
+)
 
 
 class HabitsSerializer(serializers.ModelSerializer):
     # action = serializers.CharField(validators=[unique_habit_name_for_user])
-    time_to_action = serializers.TimeField(validators=[lead_time])
-    period = serializers.IntegerField(validators=[period_habit])
+    time_to_action = serializers.DurationField(
+        default=timedelta(minutes=2), validators=[lead_time]
+    )
+    period = serializers.IntegerField(default=1, validators=[period_habit])
 
     class Meta:
         model = Habits
@@ -18,29 +28,30 @@ class HabitsSerializer(serializers.ModelSerializer):
     #     unique_habit_name_for_user(value, owner)
     #     return value
 
-
     def validate(self, attrs):
         print(attrs)
-        addition_habit = attrs.get('addition_habit')
-        award = attrs.get('award')
+        addition_habit = attrs.get("addition_habit")
+        award = attrs.get("award")
         validate_pleasant_habit(addition_habit)
         validate_one_field_only(addition_habit, award)
 
         return attrs
 
 
-
-
 class HabitsModerationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Habits
-        fields = ['is_published']  # Указываем только поле, которое может быть изменено
+        fields = ["is_published"]  # Указываем только поле, которое может быть изменено
 
     def update(self, instance, validated_data):
+        # Проверяем, что нет других полей, кроме is_published
+        if len(validated_data) > 1 or "is_published" not in validated_data:
+            raise ValidationError("Можно менять только публикацию")
+
         # Обновляем только поле is_published
-        instance.is_published = validated_data.get('is_published', instance.is_published)
+        instance.is_published = validated_data.get(
+            "is_published", instance.is_published
+        )
         instance.save()
         return instance
-
-

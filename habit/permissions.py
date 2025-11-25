@@ -3,6 +3,7 @@ from rest_framework.permissions import BasePermission
 
 class IsAdmin(BasePermission):
     """Разрешение, позволяющее просматривать объект только админу"""
+
     def has_object_permission(self, request, view, obj):
         user = request.user
         # Если пользователь администратор, доступ разрешен
@@ -12,6 +13,7 @@ class IsAdmin(BasePermission):
 
 class IsOwner(BasePermission):
     """Разрешение, позволяющее просматривать объект только владельцу"""
+
     def has_object_permission(self, request, view, obj):
         user = request.user
 

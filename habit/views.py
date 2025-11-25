@@ -52,14 +52,13 @@ class HabitUpdateAPIView(generics.UpdateAPIView):
     queryset = Habits.objects.all()
 
     def get_serializer_class(self):
-        if self.request.user.is_staff:
-            return HabitsModerationSerializer
-        else:
+        habit = self.get_object()
+        if self.request.user == habit.owner:
             return HabitsSerializer
+        else:
+            return HabitsModerationSerializer
 
 
 class HabitsDestroyAPIView(generics.DestroyAPIView):
     queryset = Habits.objects.all()
     permission_classes = [IsOwner]
-
-

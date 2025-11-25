@@ -11,7 +11,9 @@ from config import settings
 def create_periodic_task():
     habits = Habits.objects.all()
     for habit in habits:
-        if not PeriodicTask.objects.filter(name=f"Send message {habit.owner.tg_chat_id} {habit.pk}").exists():
+        if not PeriodicTask.objects.filter(
+            name=f"Send message {habit.owner.tg_chat_id} {habit.pk}"
+        ).exists():
             print(f"Задача добавлена {habit.action}")
             schedule, created = IntervalSchedule.objects.get_or_create(
                 every=habit.period,
@@ -21,15 +23,15 @@ def create_periodic_task():
             PeriodicTask.objects.create(
                 interval=schedule,
                 name=f"Send message {habit.owner.tg_chat_id} {habit.pk}",
-                task='users.tasks.send_message',
+                task="users.tasks.send_message",
                 args=json.dumps([text, habit.owner.tg_chat_id]),
-                start_time=str(datetime.now().date()) + " " + str(habit.time)
+                start_time=str(datetime.now().date()) + " " + str(habit.time),
             )
+
 
 @shared_task
 def send_message(text, tg_chat_id):
-    params = {
-        'text': text,
-        'chat_id': tg_chat_id
-    }
-    requests.get(f'{settings.TELEGRAM_URL}{settings.BOT_TOKEN}/sendMessage', params=params).json()
+    params = {"text": text, "chat_id": tg_chat_id}
+    requests.get(
+        f"{settings.TELEGRAM_URL}{settings.BOT_TOKEN}/sendMessage", params=params
+    ).json()
