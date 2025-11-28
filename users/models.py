@@ -30,6 +30,13 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True,
     )
+    tg_chat_id = models.CharField(
+        max_length=100,
+        verbose_name="телеграмм id",
+        blank=True,
+        null=True,
+        help_text="Необязательное поле. Введите телеграм id",
+    )
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
