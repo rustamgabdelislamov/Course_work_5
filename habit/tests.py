@@ -18,6 +18,20 @@ class HabitTestCase(APITestCase):
         )
         self.client.force_authenticate(user=self.user)
 
+    def test_validate_pleasant_habit(self):
+        habit_data = {
+            "action":"Пойти в магазин",
+            "owner":self.user.pk,
+            "addition_habit":self.habit.pk,
+            "time":"14:30",
+        }
+        url = reverse("habit:habit_create")
+
+        response = self.client.post(url, habit_data)
+        data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(data.get('non_field_errors')[0], 'В связанные привычки могут попадать только привычки с признаком приятной привычки.')
+
     def test_habit_retrieve(self):
         url = reverse("habit:habit_retrieve", args=(self.habit.pk,))
         response = self.client.get(url)
