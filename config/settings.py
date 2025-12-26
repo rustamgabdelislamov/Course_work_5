@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
@@ -15,7 +16,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv("DEBUG") == "True" else False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -117,6 +118,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = os.path.join(BASE_DIR / "staticfiles")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -179,12 +181,27 @@ CELERY_BEAT_SCHEDULE = {
 CORS_ALLOWED_ORIGINS = [
     "https://read-and-write.example.com",
     "https://read-only.example.com",
-    "http://localhost:8000",  # Замените на адрес вашего фронтенд-сервера
+    "http://localhost:8000",
+    'http://158.160.214.149',
+    'https://158.160.214.149',  # Замените на адрес вашего фронтенд-сервера
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://read-and-write.example.com",  # Замените на адрес вашего фронтенд-сервера
+    'http://158.160.214.149',
+    'https://158.160.214.149',
     # и добавьте адрес бэкенд-сервера
 ]
 
-CORS_ALLOW_ALL_ORIGINS = False
+CSRF_ALLOWED_ORIGINS = [
+    'http://158.160.214.149',
+    'https://158.160.214.149',
+]
+
+if "test" in sys.argv:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "test_db.sqlite3",
+        }
+    }

@@ -20,17 +20,18 @@ class HabitTestCase(APITestCase):
 
     def test_validate_pleasant_habit(self):
         habit_data = {
-            "action":"Пойти в магазин",
-            "owner":self.user.pk,
-            "addition_habit":self.habit.pk,
-            "time":"14:30",
+            "action": "Пойти в магазин",
+            "owner": self.user.pk,
+            "addition_habit": self.habit.pk,
+            "time": "14:30",
         }
         url = reverse("habit:habit_create")
 
         response = self.client.post(url, habit_data)
         data = response.json()
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(data.get('non_field_errors')[0], 'В связанные привычки могут попадать только привычки с признаком приятной привычки.')
+        self.assertEqual(data.get('non_field_errors')[0], 'В связанные привычки могут попадать только привычки '
+                                                          'с признаком приятной привычки.')
 
     def test_habit_retrieve(self):
         url = reverse("habit:habit_retrieve", args=(self.habit.pk,))
@@ -122,47 +123,6 @@ class HabitTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.habit.refresh_from_db()
         self.assertEqual(self.habit.action, "Рубить дрова")
-
-
-# class HabitValidatorsTestCase(APITestCase):
-#
-#     def setUp(self):
-#         self.user = CustomUser.objects.create(email="test@mail.ru", password=1990)
-#
-#         # связанная привычка
-#         self.related_habit = Habits.objects.create(
-#             action='Чистить зубы',
-#             owner=self.user,
-#             reward_action=True,
-#             time=time(8, 0)
-#         )
-#         # основная привычка
-#         self.habit = Habits.objects.create(
-#             action="Рубить дрова",
-#             owner=self.user,
-#             reward_action=False,
-#             addition_habit=self.related_habit,
-#             time=time(14, 30),
-#         )
-#         self.client.force_authenticate(user=self.user)
-#
-#     def test_validate_pleasant_habit_with_valid_habit(self):
-#         validate_pleasant_habit()
-
-# def test_validate_pleasant_habit_with_invalid_habit(self):
-#     # Создайте объект привычки без признака приятной привычки
-#     addition_habit = Habits(reward_action=False)  # Замените на вашу модель
-#     with self.assertRaises(ValidationError):
-#         validate_pleasant_habit(addition_habit)
-#
-# def test_validate_pleasant_habit_with_none(self):
-#     # Проверяем, что None не вызывает исключение
-#     addition_habit = None
-#     try:
-#         validate_pleasant_habit(addition_habit)
-#     except ValidationError:
-#         self.fail("validate_pleasant_habit() raised ValidationError unexpectedly for None!")
-
 
 #     def test_lesson_update_as_moderator(self):
 #         # Создаем пользователся модератора и добавляем его в группу "moders"
