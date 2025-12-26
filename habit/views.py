@@ -61,3 +61,4 @@ class HabitUpdateAPIView(generics.UpdateAPIView):
 class HabitsDestroyAPIView(generics.DestroyAPIView):
     queryset = Habits.objects.all()
     permission_classes = [IsOwner]
+
