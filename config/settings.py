@@ -182,20 +182,20 @@ CORS_ALLOWED_ORIGINS = [
     "https://read-and-write.example.com",
     "https://read-only.example.com",
     "http://localhost:8000",
-    'http://158.160.214.149',
-    'https://158.160.214.149',  # Замените на адрес вашего фронтенд-сервера
+    'http://158.160.190.229',
+    'https://158.160.190.229',  # Замените на адрес вашего фронтенд-сервера
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://read-and-write.example.com",  # Замените на адрес вашего фронтенд-сервера
-    'http://158.160.214.149',
-    'https://158.160.214.149',
+    'http://158.160.190.229',
+    'https://158.160.190.229',
     # и добавьте адрес бэкенд-сервера
 ]
 
 CSRF_ALLOWED_ORIGINS = [
-    'http://158.160.214.149',
-    'https://158.160.214.149',
+    'http://158.160.190.229',
+    'https://158.160.190.229',
 ]
 
 if "test" in sys.argv:
