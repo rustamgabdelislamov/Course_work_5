@@ -173,7 +173,7 @@ CELERY_BEAT_SCHEDULE = {
     "task-name": {
         "task": "users.tasks.create_periodic_task",  # Путь к задаче
         "schedule": timedelta(
-            seconds=10
+            minutes=10
         ),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }
