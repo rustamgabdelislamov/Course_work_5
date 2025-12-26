@@ -11,3 +11,4 @@ class Command(BaseCommand):
         user.is_superuser = True
         user.set_password("1990")
         user.save()
+
