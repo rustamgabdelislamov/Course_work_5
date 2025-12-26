@@ -124,7 +124,6 @@ class HabitTestCase(APITestCase):
         self.habit.refresh_from_db()
         self.assertEqual(self.habit.action, "Рубить дрова")
 
-
 #     def test_lesson_update_as_moderator(self):
 #         # Создаем пользователся модератора и добавляем его в группу "moders"
 #         moderator = CustomUser.objects.create(email='moderator@mail.ru')
